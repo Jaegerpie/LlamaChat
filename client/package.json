@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@clerk/react": "^6.6.2",
+    "@google/genai": "^2.3.0",
     "@imagekit/react": "^5.0.2",
+    "@tanstack/react-query": "^5.100.10",
     "react": "19.0.0-rc-8b08e99e-20240713",
     "react-dom": "19.0.0-rc-8b08e99e-20240713",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.15.0",
     "react-type-animation": "^3.2.0"
   },

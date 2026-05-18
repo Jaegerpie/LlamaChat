@@ -8,6 +8,8 @@ function HomePage() {
 
   const [typingStatus, setTypingStatus] = useState("human1")
 
+
+
   return (
     <div className="homePage">
       <img src="/orbital.png" alt="" className="orbital" />
