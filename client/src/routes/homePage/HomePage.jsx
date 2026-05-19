@@ -17,9 +17,9 @@ function HomePage() {
         <h1>LAMA AI</h1>
         <h2>Supercharge your creativity and productivity</h2>
         <h3>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repudiandae
-          dignissimos repellat dolorem! Nesciunt voluptatem quaerat nemo
-          voluptates, amet nam minima ut
+          The most powerful technology is the kind that feels natural. LAMA AI is at
+          its best when it disappears into the experience and simply helps
+          people do extraordinary things.
         </h3>
         <Link to="/dashboard">Get Started</Link>
       </div>
@@ -30,30 +30,39 @@ function HomePage() {
           </div>
           <img src="/bot.png" alt="" className="bot" />
           <div className="chat">
-            <img src={typingStatus === "human1" ? "/human1.jpeg" : typingStatus === "human2" ? "/human2.jpeg" : "bot.png"} alt="" />
+            <img
+              src={
+                typingStatus === "human1"
+                  ? "/human1.jpeg"
+                  : typingStatus === "human2"
+                    ? "/human2.jpeg"
+                    : "bot.png"
+              }
+              alt=""
+            />
 
             <TypeAnimation
               sequence={[
                 // Same substring at the start will only be typed out once, initially
                 "Human:We produce food for Mice",
                 2000,
-                ()=>{
-                  setTypingStatus("bot")
+                () => {
+                  setTypingStatus("bot");
                 }, // wait 1s before replacing "Mice" with "Hamsters"
                 "Bot:We produce food for Hamsters",
                 2000,
-                ()=>{
-                  setTypingStatus("human2")
+                () => {
+                  setTypingStatus("human2");
                 },
                 "Human:We produce food for Guinea Pigs",
                 2000,
-                ()=>{
-                  setTypingStatus("bot")
+                () => {
+                  setTypingStatus("bot");
                 },
                 "Bot:We produce food for Chinchillas",
                 2000,
-                ()=>{
-                  setTypingStatus("human1")
+                () => {
+                  setTypingStatus("human1");
                 },
               ]}
               wrapper="span"
@@ -64,7 +73,7 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className='terms'>
+      <div className="terms">
         <img src="/logo.png" alt="" />
         <div className="links">
           <Link to="/">Terms of Service</Link>

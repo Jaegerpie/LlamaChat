@@ -27,3 +27,47 @@
     overflow: hidden;
   }
 }
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Clerk buttons (SignInButton / SignUpButton) */
+.signIn,
+.signUp {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 140ms ease, background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.signIn:hover,
+.signUp:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.signIn:active,
+.signUp:active {
+  transform: translateY(0px);
+}
+
+.signUp {
+  background: #ffffff;
+  color: #0b1220;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.signUp:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(255, 255, 255, 0.85);
+}
