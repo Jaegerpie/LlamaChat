@@ -3,26 +3,28 @@ import "./dashboardPage.css"
 import {useAuth} from "@clerk/react"
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { authedFetch } from '../../lib/api'
 
 
 function DashboardPage() {
-  
+  const { getToken } = useAuth()
   const queryClient = useQueryClient()
 
   const navigate = useNavigate()
 
   const mutation = useMutation({
     mutationFn: (text)=>{
-      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`,{
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({text}),
-    }).then((res)=>res.json())
-
-
+      return authedFetch(
+        `${import.meta.env.VITE_API_URL}/api/chats`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({text}),
+        },
+        getToken
+      ).then((res)=>res.json())
     },
     onSuccess: (id)=>{
       queryClient.invalidateQueries({queryKey: ["userChats"]})

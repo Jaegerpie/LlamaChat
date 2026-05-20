@@ -1,21 +1,25 @@
 import { useRef } from "react";
 import { upload } from "@imagekit/react";
+import { authedFetch } from "../../lib/api";
 
 const publicKey = import.meta.env.VITE_IMAGE_KIT_PUBLIC_KEY;
 
-const authenticator = async () => {
-  const response = await fetch("http://localhost:3000/api/upload");
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(
-      `Request failed with status ${response.status}: ${errorText}`,
+const Upload = ({ setImg, getToken }) => {
+  const authenticator = async () => {
+    const response = await authedFetch(
+      `${import.meta.env.VITE_API_URL}/api/upload`,
+      {},
+      getToken
     );
-  }
-  const { signature, expire, token } = await response.json();
-  return { signature, expire, token, publicKey };
-};
-
-const Upload = ({ setImg }) => {
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Request failed with status ${response.status}: ${errorText}`,
+      );
+    }
+    const { signature, expire, token } = await response.json();
+    return { signature, expire, token, publicKey };
+  };
   const fileInputRef = useRef(null);
 
   const handleFileChange = async (evt) => {

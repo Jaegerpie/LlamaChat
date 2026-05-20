@@ -5,8 +5,11 @@ import { Image } from "@imagekit/react";
 import { ai, safetySettings } from "../../lib/gemini";
 import Markdown from "react-markdown";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@clerk/react";
+import { authedFetch } from "../../lib/api";
 
 function NewPrompt({ data }) {
+  const { getToken } = useAuth();
   const [question, setQuestion] = useState("");
   const [ans, setAnswer] = useState("");
   const [img, setImg] = useState({
@@ -50,18 +53,21 @@ function NewPrompt({ data }) {
 
   const mutation = useMutation({
     mutationFn: ({ question: q, ans: aText }) => {
-      return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
+      return authedFetch(
+        `${import.meta.env.VITE_API_URL}/api/chats/${data._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question: q?.length ? q : undefined,
+            ans: aText,
+            img: img.dbData?.filePath || undefined,
+          }),
         },
-        body: JSON.stringify({
-          question: q?.length ? q : undefined,
-          ans: aText,
-          img: img.dbData?.filePath || undefined,
-        }),
-      }).then((res) => res.json());
+        getToken
+      ).then((res) => res.json());
     },
     onSuccess: () => {
       queryClient
@@ -154,7 +160,7 @@ function NewPrompt({ data }) {
       )}
       <div className="endChat" ref={endRef}></div>
       <form className="newForm" onSubmit={handleSubmit} ref={formRef}>
-        <Upload setImg={setImg} />
+        <Upload setImg={setImg} getToken={getToken} />
         <input id="file" type="file" multiple={false} hidden />
         <input type="text" name="text" placeholder="Ask anything..." />
         <button>

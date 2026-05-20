@@ -93,7 +93,6 @@ app.post("/api/chats", async (req, res) => {
       });
       await newUserChats.save();
     } else {
-      //IF EXISTS, PUSH THE CHAT IN THE EXISTING ARRAY
       await UserChats.updateOne(
         { userId: userId },
         {
@@ -105,9 +104,9 @@ app.post("/api/chats", async (req, res) => {
           },
         }
       );
-
-      res.status(201).send(savedChat._id);
     }
+
+    res.status(201).send(savedChat._id);
   } catch (error) {
     console.log(error);
     res.status(500).send("Error creating chat!");
@@ -180,4 +179,10 @@ app.listen(port,()=>{
 })
     */
 
-module.exports = app;
+export default app;
+
+if (process.env.VERCEL !== "1") {
+  app.listen(port, () => {
+    console.log(`Server running at port ${port}`);
+  });
+}
