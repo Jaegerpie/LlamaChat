@@ -1,4 +1,7 @@
-export async function authedFetch(url, options = {}, getToken) {
+import { getApiUrl } from "./apiUrl";
+
+export async function authedFetch(path, options = {}, getToken) {
+  const url = path.startsWith("http") ? path : getApiUrl(path);
   const token = await getToken();
 
   return fetch(url, {

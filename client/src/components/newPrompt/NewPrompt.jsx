@@ -53,9 +53,7 @@ function NewPrompt({ data }) {
 
   const mutation = useMutation({
     mutationFn: ({ question: q, ans: aText }) => {
-      return authedFetch(
-        `${import.meta.env.VITE_API_URL}/api/chats/${data._id}`,
-        {
+      return authedFetch(`/api/chats/${data._id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

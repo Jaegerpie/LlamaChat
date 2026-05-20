@@ -16,11 +16,9 @@ function ChatPage() {
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: () =>
-      authedFetch(
-        `${import.meta.env.VITE_API_URL}/api/chats/${chatId}`,
-        {},
-        getToken
-      ).then((res) => res.json()),
+      authedFetch(`/api/chats/${chatId}`, {}, getToken).then((res) =>
+        res.json()
+      ),
   });
 
   return (

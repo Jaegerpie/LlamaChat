@@ -12,14 +12,28 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(clerkMiddleware());
-app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  process.env.CLIENT_URL?.trim().replace(/\/$/, ""),
+].filter(Boolean);
+
+const uniqueOrigins = [...new Set(allowedOrigins)];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin(origin, callback) {
+      if (!origin || uniqueOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS blocked for origin: ${origin}`));
+      }
+    },
     credentials: true,
   })
 );
+app.use(clerkMiddleware());
+app.use(express.json());
 
 /*const connect = async ()=>{
   try{

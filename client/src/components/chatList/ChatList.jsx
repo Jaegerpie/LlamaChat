@@ -13,11 +13,7 @@ function ChatList() {
   const {isPending, error, data} = useQuery({
     queryKey: ['userChats'],
     queryFn: ()=>
-      authedFetch(
-        `${import.meta.env.VITE_API_URL}/api/userchats`,
-        {},
-        getToken
-      ).then((res)=>res.json()),
+      authedFetch("/api/userchats", {}, getToken).then((res) => res.json()),
   })
 
 

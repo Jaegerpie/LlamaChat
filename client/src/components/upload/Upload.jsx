@@ -6,11 +6,7 @@ const publicKey = import.meta.env.VITE_IMAGE_KIT_PUBLIC_KEY;
 
 const Upload = ({ setImg, getToken }) => {
   const authenticator = async () => {
-    const response = await authedFetch(
-      `${import.meta.env.VITE_API_URL}/api/upload`,
-      {},
-      getToken
-    );
+    const response = await authedFetch("/api/upload", {}, getToken);
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(

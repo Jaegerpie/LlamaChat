@@ -15,16 +15,16 @@ function DashboardPage() {
   const mutation = useMutation({
     mutationFn: (text)=>{
       return authedFetch(
-        `${import.meta.env.VITE_API_URL}/api/chats`,
+        "/api/chats",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({text}),
+          body: JSON.stringify({ text }),
         },
         getToken
-      ).then((res)=>res.json())
+      ).then((res) => res.json())
     },
     onSuccess: (id)=>{
       queryClient.invalidateQueries({queryKey: ["userChats"]})
